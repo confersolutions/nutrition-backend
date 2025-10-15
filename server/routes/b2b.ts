@@ -1,14 +1,14 @@
 import { Router } from "express";
 import { z } from "zod";
-import { db, getDbConnection, checkReplicationLag } from "../config/database";
-import { vendors, vendorUsers, products, customers, ingestionJobs } from "@shared/schema";
+import { db, getDbConnection, checkReplicationLag } from "../config/database.js";
+import { vendors, vendorUsers, products, customers, ingestionJobs } from "../../shared/schema.js";
 import { 
   insertVendorSchema, 
   insertVendorUserSchema, 
   insertProductSchema,
   insertCustomerSchema,
   insertIngestionJobSchema 
-} from "@shared/schema";
+} from "../../shared/schema.js";
 import { eq, and, desc, count } from "drizzle-orm";
 import { 
   createVendor, 
@@ -16,19 +16,19 @@ import {
   getVendorByDomain, 
   getVendorStats, 
   validateApiKey 
-} from "../services/b2b/vendorService";
+} from "../services/b2b/vendorService.js";
 import {
   createIngestionJob,
   processCsvIngestion,
   getJobStatus,
   getVendorJobs
-} from "../services/b2b/ingestionService";
+} from "../services/b2b/ingestionService.js";
 import {
   findHealthAwareMatches,
   batchHealthMatching,
   clearCustomerCache,
   getMatchingMetrics
-} from "../services/b2b/matchingService";
+} from "../services/b2b/matchingService.js";
 
 const router = Router();
 

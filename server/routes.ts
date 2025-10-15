@@ -1,13 +1,15 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import recipesRouter from "./routes/recipes";
-import feedRouter from "./routes/feed";
-import userRouter from "./routes/user";
-import adminRouter from "./routes/admin";
-import b2bRouter from "./routes/b2b";
-import healthRouter from "./routes/health";
-import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
-import { idempotencyMiddleware, storeIdempotentResponse } from "./middleware/idempotency";
+import recipesRouter from "./routes/recipes.js";
+import feedRouter from "./routes/feed.js";
+import userRouter from "./routes/user.js";
+import adminRouter from "./routes/admin.js";
+import b2bRouter from "./routes/b2b.js";
+import healthRouter from "./routes/health.js";
+import syncRouter from "./routes/sync.js"; 
+import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
+import { idempotencyMiddleware, storeIdempotentResponse } from "./middleware/idempotency.js";
+import userRecipesRouter from "./routes/userRecipes.js";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Global middleware
@@ -20,7 +22,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use("/api/v1/me", userRouter);
   app.use("/api/v1/admin", adminRouter);
   app.use("/api/v1/b2b", b2bRouter);
-  
+  app.use("/api/v1/sync", syncRouter);
+  app.use("/api/v1/user-recipes", userRecipesRouter);
   // Health checks (no /api prefix)
   app.use("/", healthRouter);
   

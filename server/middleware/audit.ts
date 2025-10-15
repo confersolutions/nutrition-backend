@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
-import { auditLog } from "@shared/schema";
-import { db } from "../config/database";
+import { auditLog } from "../../shared/schema.js";
+import { db } from "../config/database.js";
 
 export async function auditLogEntry(
   actorUserId: string,

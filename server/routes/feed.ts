@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { authMiddleware } from "../middleware/auth";
-import { rateLimitMiddleware } from "../middleware/rateLimit";
-import { getPersonalizedFeed, getFeedRecommendations, createOrUpdateUserProfile, getUserProfile } from "../services/feed";
+import { authMiddleware } from "../middleware/auth.js";
+import { rateLimitMiddleware } from "../middleware/rateLimit.js";
+import { getPersonalizedFeed, getFeedRecommendations, createOrUpdateUserProfile, getUserProfile } from "../services/feed.js";
 
 const router = Router();
 
 router.get("/", authMiddleware, rateLimitMiddleware, async (req, res, next) => {
   try {
-    const limit = req.query.limit ? parseInt(req.query.limit as string) : 50;
+    const limit = req.query.limit ? parseInt(req.query.limit as string) : 200;
     const offset = req.query.offset ? parseInt(req.query.offset as string) : 0;
     
     const results = await getPersonalizedFeed(req.user.effectiveUserId, limit, offset);
